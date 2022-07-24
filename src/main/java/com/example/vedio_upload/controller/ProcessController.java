@@ -1,6 +1,7 @@
 package com.example.vedio_upload.controller;
 
 import com.example.vedio_upload.service.IProcessService;
+import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,14 +29,16 @@ public class ProcessController {
         //收到确认信息，文件url , 文件名
         System.out.println("收到post请求：" + params.get("context") + " " + params.get("url") + " " + params.get("fileName"));
         //将url传给处理函数
-        String processedUrl = processService.ProcessAlgorithm((String) params.get("url"),(String) params.get("fileName"),req);
+        String originname = (String) params.get("fileName");
+        String aftername = originname.substring(0,originname.indexOf(".")) + "_proced";
 
+        //String processedUrl = processService.ProcessAlgorithm((String) params.get("url"),aftername,req);
+        String processedUrl = "http://" + req.getServerName() + ":" + req.getServerPort() + "/video/" + aftername;
 
         //返回文件类型，url
-        String name = params.get("fileName") + "_proced";
         result.put("type","mp4");
         result.put("ProcessedUrl",processedUrl);
-        result.put("name",name);
+        result.put("name",aftername);
         return result ;
     }
 }

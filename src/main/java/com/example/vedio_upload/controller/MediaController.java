@@ -33,7 +33,7 @@ public class MediaController {
      * @param response
      * @throws Exception
      */
-    //@GetMapping("video/{filename}")
+    @GetMapping("video/{filename}")
     public void getPlayResource(HttpServletRequest request, HttpServletResponse response, @PathVariable("filename") String name ) throws Exception {
         System.out.println("getplayresource:");
         Path path = Paths.get(url + name + ".mp4");
